@@ -87,7 +87,7 @@ const containerVariants = {
   show: { transition: { staggerChildren: 0.08 } },
 };
 
-const cardVariants: Variants = {
+const cardVariants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
 };
