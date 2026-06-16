@@ -111,10 +111,10 @@ export default function RoastMySite() {
         body: JSON.stringify({ url }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong");
+      if (!res.ok) throw new Error(data.error || "Something went wrong — give it another shot");
       setResult(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to roast site");
+      setError(err instanceof Error ? err.message : "Couldn't start the roast — try again");
     } finally {
       setLoading(false);
     }
@@ -146,9 +146,9 @@ export default function RoastMySite() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="flex gap-2.5 mb-10">
         <input
-          type="url"
+          type="text"
           required
-          placeholder="https://yoursite.com"
+          placeholder="yoursite.com"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           disabled={loading}
