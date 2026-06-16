@@ -1,65 +1,78 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Flame, Sparkles } from "lucide-react";
+
+const tools = [
+  {
+    slug: "roastmysite",
+    name: "Roast My Site",
+    description:
+      "Get an honest AI critique of any website — copy clarity, UX, CTAs, and SEO basics. No sugarcoating.",
+    icon: Flame,
+    status: "Live",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="max-w-5xl mx-auto px-6 py-20">
+      {/* Hero */}
+      <div className="mb-16">
+        <p className="text-xs font-semibold text-orange-500 uppercase tracking-widest mb-4">
+          toolsbyjoy
+        </p>
+        <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-5 text-zinc-900 dark:text-zinc-50 leading-[1.1]">
+          AI tools that{" "}
+          <span className="text-orange-500">actually</span>
+          <br />
+          do stuff
+        </h1>
+        <p className="text-lg text-zinc-500 dark:text-zinc-400 max-w-md leading-relaxed">
+          A growing collection of free AI-powered tools. Drop in, get results,
+          leave smarter.
+        </p>
+      </div>
+
+      {/* Tools grid */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {tools.map((tool) => {
+          const Icon = tool.icon;
+          return (
+            <Link
+              key={tool.slug}
+              href={`/${tool.slug}`}
+              className="group relative block rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 hover:border-orange-400/60 dark:hover:border-orange-500/40 hover:shadow-xl hover:shadow-orange-500/5 dark:hover:shadow-orange-500/10 transition-all duration-300"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <div className="flex items-start justify-between mb-5">
+                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 dark:bg-orange-500/15 text-orange-500">
+                  <Icon size={20} />
+                </div>
+                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-400/10 rounded-full px-2.5 py-1">
+                  {tool.status}
+                </span>
+              </div>
+              <h2 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1.5 text-lg group-hover:text-orange-500 transition-colors duration-200">
+                {tool.name}
+              </h2>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                {tool.description}
+              </p>
+              <div className="mt-5 flex items-center gap-1.5 text-xs font-medium text-orange-500 group-hover:gap-2.5 transition-all duration-200">
+                Try it <ArrowRight size={12} />
+              </div>
+            </Link>
+          );
+        })}
+
+        {/* Coming soon placeholder */}
+        <div className="rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-800 p-6 flex flex-col items-center justify-center text-center gap-3 min-h-45">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-400">
+            <Sparkles size={16} />
+          </div>
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">
+            More tools coming soon
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
