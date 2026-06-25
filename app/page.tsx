@@ -20,13 +20,13 @@ export default function Home() {
         <p className="text-xs font-semibold text-orange-500 uppercase tracking-widest mb-4">
           toolsbyjoy
         </p>
-        <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-5 text-zinc-900 dark:text-zinc-50 leading-[1.1]">
+        <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-5 text-zinc-900 dark:text-zinc-50 leading-[1.1] text-balance">
           AI tools that{" "}
           <span className="text-orange-500">actually</span>
           <br />
           do stuff
         </h1>
-        <p className="text-lg text-zinc-500 dark:text-zinc-400 max-w-md leading-relaxed">
+        <p className="text-lg text-zinc-500 dark:text-zinc-400 max-w-md leading-relaxed text-pretty">
           A growing collection of free AI-powered tools. Drop in, get results,
           leave smarter.
         </p>
@@ -68,7 +68,7 @@ export default function Home() {
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-400">
             <Sparkles size={16} />
           </div>
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
             More tools coming soon
           </p>
         </div>

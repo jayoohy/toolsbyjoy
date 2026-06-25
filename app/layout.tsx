@@ -45,7 +45,7 @@ export default function RootLayout({
             </div>
           </header>
           <div className="flex-1">{children}</div>
-          <footer className="border-t border-zinc-200 dark:border-zinc-800 py-6 text-center text-xs text-zinc-400 dark:text-zinc-600">
+          <footer className="border-t border-zinc-200 dark:border-zinc-800 py-6 text-center text-xs text-zinc-500 dark:text-zinc-400">
             Built by <a href="https://joyogukah.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">Joy</a> · Powered by n8n + Gemini
           </footer>
         </Providers>

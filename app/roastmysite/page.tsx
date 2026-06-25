@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { ArrowLeft, Flame, Zap, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 
 type Category = {
@@ -56,7 +56,7 @@ function OverallScore({ score }: { score: number }) {
       className={`inline-flex flex-col items-center rounded-2xl px-8 py-5 ring-4 ${ring} ${bg} shrink-0`}
     >
       <span className={`text-5xl font-black leading-none ${text}`}>{score}</span>
-      <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500 mt-1.5 uppercase tracking-wide">
+      <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 mt-1.5 uppercase tracking-wide">
         /10 · {label}
       </span>
     </motion.div>
@@ -98,8 +98,7 @@ export default function RoastMySite() {
   const [result, setResult] = useState<RoastResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function doRoast() {
     setLoading(true);
     setResult(null);
     setError(null);
@@ -120,11 +119,16 @@ export default function RoastMySite() {
     }
   }
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await doRoast();
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
       <Link
         href="/"
-        className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-10"
+        className="inline-flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-10"
       >
         <ArrowLeft size={14} /> All tools
       </Link>
@@ -134,25 +138,27 @@ export default function RoastMySite() {
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 dark:bg-orange-500/15 text-orange-500">
             <Flame size={20} />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 text-balance">
             Roast My Site
           </h1>
         </div>
-        <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
+        <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed text-pretty">
           Drop any URL and get an honest AI critique — copy, UX, CTAs, and SEO. No sugarcoating.
         </p>
       </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="flex gap-2.5 mb-10">
+        <label htmlFor="site-url" className="sr-only">Website URL</label>
         <input
+          id="site-url"
           type="text"
           required
           placeholder="yoursite.com"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           disabled={loading}
-          className="flex-1 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 px-4 py-3 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent disabled:opacity-50 transition"
+          className="flex-1 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 px-4 py-3 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent disabled:opacity-50 transition"
         />
         <button
           type="submit"
@@ -163,10 +169,14 @@ export default function RoastMySite() {
         </button>
       </form>
 
+      <MotionConfig reducedMotion="user">
+      <div aria-live="polite" aria-atomic="false">
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div
             key="loading"
+            role="status"
+            aria-label="Loading roast results"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -188,7 +198,8 @@ export default function RoastMySite() {
               {error}
             </div>
             <button
-              onClick={() => handleSubmit({ preventDefault: () => {} } as React.SyntheticEvent<HTMLFormElement>)}
+              type="button"
+              onClick={doRoast}
               className="ml-6 text-xs font-semibold underline underline-offset-2 hover:opacity-70 transition-opacity"
             >
               Try again →
@@ -209,7 +220,7 @@ export default function RoastMySite() {
               variants={cardVariants}
               className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6"
             >
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-5">
+              <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-5">
                 Overall Score
               </p>
               <div className="flex flex-col sm:flex-row gap-5 sm:items-center">
@@ -234,7 +245,7 @@ export default function RoastMySite() {
                     </h3>
                   </div>
                   <ScoreBar score={cat.score} animate />
-                  <p className="text-xs text-zinc-400 dark:text-zinc-500 italic mt-2.5 mb-3">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 italic mt-2.5 mb-3">
                     {cat.verdict}
                   </p>
 
@@ -285,12 +296,13 @@ export default function RoastMySite() {
 
             <motion.p
               variants={cardVariants}
-              className="text-xs text-center text-zinc-400 dark:text-zinc-600 pb-4"
+              className="text-xs text-center text-zinc-500 dark:text-zinc-400 pb-4"
             >
               Analyzed by Gemini via n8n ·{" "}
               <button
+                type="button"
                 onClick={() => { setResult(null); setUrl(""); }}
-                className="underline hover:text-zinc-600 dark:hover:text-zinc-400 transition-colors"
+                className="underline hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
               >
                 Roast another
               </button>
@@ -298,6 +310,8 @@ export default function RoastMySite() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
+      </MotionConfig>
     </div>
   );
 }
